@@ -7,42 +7,48 @@ public class BoyController : MonoBehaviour
     public float speed = 5f;
     public float jumpSpeed = 8f;
     private Rigidbody2D player;
-
-    public Transform groundCheck;
-    public float groundCheckRadius;
-    public LayerMask groundLayer;
-    public bool isTouchingGround;
+    public Transform GroundCheck;
+    public float GroundCheckRadius = 0.2f;
+    public LayerMask GroundLayer;
+    private bool isTouchingGround;
 
     void Start()
     {
         player = GetComponent<Rigidbody2D>();
-
-        // Lock rotation to prevent rolling
         player.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     void Update()
     {
-        isTouchingGround = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        isTouchingGround = Physics2D.OverlapCircle(GroundCheck.position, GroundCheckRadius, GroundLayer);
 
         float directionX = 0f;
 
-        // Movement controls for the boy (WASD)
         if (Input.GetKey(KeyCode.A))
         {
+            transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             directionX = -1f;
         }
         else if (Input.GetKey(KeyCode.D))
         {
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             directionX = 1f;
         }
 
         player.velocity = new Vector2(directionX * speed, player.velocity.y);
 
-        // Jumping with W key
-        if (Input.GetKey(KeyCode.W) && isTouchingGround)
+        if (Input.GetKeyDown(KeyCode.W) && isTouchingGround)
         {
             player.velocity = new Vector2(player.velocity.x, jumpSpeed);
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (GroundCheck != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(GroundCheck.position, GroundCheckRadius);
         }
     }
 }
