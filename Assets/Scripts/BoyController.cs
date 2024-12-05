@@ -5,7 +5,7 @@ using UnityEngine;
 public class BoyController : MonoBehaviour
 {
     public float speed = 5f;
-    public float jumpSpeed = 8f;
+    public float jumpSpeed = 5f;
     private Rigidbody2D player;
     public Transform GroundCheck;
     public float GroundCheckRadius = 0.2f;
