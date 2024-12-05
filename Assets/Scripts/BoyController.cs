@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BoyController : MonoBehaviour
 {
@@ -55,12 +54,13 @@ public class BoyController : MonoBehaviour
         return hit.collider != null;
     }
 
-    private void OnDrawGizmos()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (GroundCheck != null)
+        if (collision.CompareTag("Ghost"))
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(GroundCheck.position, GroundCheckRadius);
+            Debug.Log("Boy touched the ghost. Girl wins!");
+            PlayerPrefs.SetString("Winner", "Girl Wins!");
+            SceneManager.LoadScene("GameOver");
         }
     }
 }
