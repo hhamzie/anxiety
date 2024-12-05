@@ -7157,8 +7157,6 @@ GameObject:
   - component: {fileID: 1014923367}
   - component: {fileID: 1014923366}
   - component: {fileID: 1014923369}
-  - component: {fileID: 1014923371}
-  - component: {fileID: 1014923370}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -7209,7 +7207,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 9.555133
+  orthographic size: 7.511461
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -7254,30 +7252,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   girl: {fileID: 1718761942}
   boy: {fileID: 1856712296}
---- !u!114 &1014923370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014923365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0383bb33348657041bccc4599e564dc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1014923371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014923365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0383bb33348657041bccc4599e564dc6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1061347552
 GameObject:
   m_ObjectHideFlags: 0
