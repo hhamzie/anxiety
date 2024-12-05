@@ -1,13 +1,14 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using TMPro;
+using TMPro; // Import TextMeshPro namespace
 
-public class Timer : MonoBehaviour, IPointerClickHandler
+public class Timer : MonoBehaviour, IPointerClickHandler // Implement IPointerClickHandler for event handling
 {
     [SerializeField] private Image uiFill;
-    [SerializeField] private TextMeshProUGUI uiText;
+    [SerializeField] private TextMeshProUGUI uiText; // Use TextMeshProUGUI instead of Text
     public int Duration;
 
     private bool Pause;
@@ -20,16 +21,10 @@ public class Timer : MonoBehaviour, IPointerClickHandler
 
     void Start()
     {
-        InitializeUI();
-        Begin(Duration);
-    }
+        // Ensure the sorting order is set to 1
+        //SetSortingOrder(1);
 
-    // Initialize the UI elements before starting the timer
-    private void InitializeUI()
-    {
-        remainingDuration = Duration;
-        uiText.text = $"{remainingDuration / 60:00} : {remainingDuration % 60:00}";
-        uiFill.fillAmount = 1; // Start with a full circle
+        Begin(Duration);
     }
 
     private void Begin(int second)
@@ -40,24 +35,18 @@ public class Timer : MonoBehaviour, IPointerClickHandler
 
     private IEnumerator UpdateTimer()
     {
-        while (remainingDuration > 0)
+        while (remainingDuration >= 0)
         {
             if (!Pause)
             {
-                // Update the UI each frame
+                // Update the TextMeshProUGUI text
                 uiText.text = $"{remainingDuration / 60:00} : {remainingDuration % 60:00}";
+                // Update the fill amount of the UI image
                 uiFill.fillAmount = Mathf.InverseLerp(0, Duration, remainingDuration);
-
                 remainingDuration--;
-                yield return new WaitForSeconds(1f); // Wait for 1 second
+                yield return new WaitForSeconds(1f);
             }
-            else
-            {
-                // Ensure UI stays updated even when paused
-                uiText.text = $"{remainingDuration / 60:00} : {remainingDuration % 60:00}";
-                uiFill.fillAmount = Mathf.InverseLerp(0, Duration, remainingDuration);
-                yield return null;
-            }
+            yield return null;
         }
         OnEnd();
     }
@@ -65,7 +54,25 @@ public class Timer : MonoBehaviour, IPointerClickHandler
     private void OnEnd()
     {
         Debug.Log("End");
-        uiText.text = "00:00"; // Show "00:00" when the timer ends
-        uiFill.fillAmount = 0; // Ensure the fill image is empty
+    }
+
+    private void SetSortingOrder(int order)
+    {
+        // Get or add a Canvas component to the GameObject
+        Canvas canvas = GetComponent<Canvas>();
+        if (canvas == null)
+        {
+            canvas = gameObject.AddComponent<Canvas>();
+        }
+
+        // Set the sorting order
+        canvas.overrideSorting = true;
+        canvas.sortingOrder = order;
+
+        // Ensure a CanvasRenderer exists for proper rendering
+        if (GetComponent<CanvasRenderer>() == null)
+        {
+            gameObject.AddComponent<CanvasRenderer>();
+        }
     }
 }
