@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BoyController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class BoyController : MonoBehaviour
     public float GroundCheckRadius = 0.2f;
     public LayerMask GroundLayer;
     private bool isTouchingGround;
+    private Collider2D currentCollider;
 
     void Start()
     {
@@ -24,12 +26,14 @@ public class BoyController : MonoBehaviour
 
         float directionX = 0f;
 
-        if (Input.GetKey(KeyCode.A))
+        // Handle left movement with collision check
+        if (Input.GetKey(KeyCode.A) && !IsBlocked(Vector2.left))
         {
             transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             directionX = -1f;
         }
-        else if (Input.GetKey(KeyCode.D))
+        // Handle right movement with collision check
+        else if (Input.GetKey(KeyCode.D) && !IsBlocked(Vector2.right))
         {
             transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             directionX = 1f;
@@ -41,14 +45,25 @@ public class BoyController : MonoBehaviour
         {
             player.velocity = new Vector2(player.velocity.x, jumpSpeed);
         }
+
+        // Apply movement
+        player.velocity = new Vector2(directionX * speed, player.velocity.y);
     }
 
-    private void OnDrawGizmos()
+    private bool IsBlocked(Vector2 direction)
     {
-        if (GroundCheck != null)
+        // Use Rigidbody2D's own collision detection by checking whether there is a block in the given direction
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 0.5f, GroundLayer);
+        return hit.collider != null;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ghost"))
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(GroundCheck.position, GroundCheckRadius);
+            Debug.Log("Boy touched the ghost. Girl wins!");
+            PlayerPrefs.SetString("Winner", "Girl Wins!");
+            SceneManager.LoadScene("GameOver");
         }
     }
 }
