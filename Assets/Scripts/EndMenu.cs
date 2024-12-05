@@ -13,7 +13,7 @@ public class EndMenu : MonoBehaviour
         string winner = PlayerPrefs.GetString("Winner");
         if (winnerText != null)
         {
-            winnerText.text = $"Winner: {winner}";
+            winnerText.text = $"{winner}";
         }
     }
     public void ToMainMenu()
