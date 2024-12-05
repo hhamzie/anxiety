@@ -5,7 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+<<<<<<< HEAD
+  - Ghost
+=======
   - Platform
+>>>>>>> 8e853e4af6cb2475ff79f4656a5ac96614b24c34
   layers:
   - Default
   - TransparentFX

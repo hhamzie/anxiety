@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GirlController : MonoBehaviour
 {
@@ -20,9 +19,6 @@ public class GirlController : MonoBehaviour
 
     void Update()
     {
-        isTouchingGround = Physics2D.OverlapCircle(GroundCheck.position, GroundCheckRadius, GroundLayer);
-        Debug.Log("isTouchingGround: " + isTouchingGround);
-
         isTouchingGround = Physics2D.OverlapCircle(GroundCheck.position, GroundCheckRadius, GroundLayer);
 
         float directionX = 0f;
@@ -46,12 +42,13 @@ public class GirlController : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (GroundCheck != null)
+        if (collision.CompareTag("Ghost"))
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(GroundCheck.position, GroundCheckRadius);
+            Debug.Log("Girl touched the ghost. Boy wins!");
+            PlayerPrefs.SetString("Winner", "Boy Wins!");
+            SceneManager.LoadScene("GameOver");
         }
     }
 }
