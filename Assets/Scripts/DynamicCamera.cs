@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class DynamicCamera : MonoBehaviour
@@ -21,8 +20,11 @@ public class DynamicCamera : MonoBehaviour
     {
         if (girl != null && boy != null)
         {
-            float averageY = (girl.position.y + boy.position.y) / 2;
-            float clampedY = Mathf.Max(averageY, initialY);
+            // Determine which character is higher
+            float highestY = Mathf.Max(girl.position.y, boy.position.y);
+
+            // Clamp the camera's Y position to the highest character's Y position
+            float clampedY = Mathf.Max(highestY, initialY);
             transform.position = new Vector3(fixedX, clampedY, fixedZ);
         }
     }
