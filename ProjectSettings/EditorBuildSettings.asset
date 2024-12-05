@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Clocktower2.unity
     guid: 132cdef80013e414b896f0a49b8ee813
+  - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: 14e96736711da4c73902371f27edb1ae
   m_configObjects: {}
