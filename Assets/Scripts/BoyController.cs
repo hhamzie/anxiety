@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -37,7 +39,8 @@ public class BoyController : MonoBehaviour
             directionX = 1f;
         }
 
-        // Handle jumping
+        player.velocity = new Vector2(directionX * speed, player.velocity.y);
+
         if (Input.GetKeyDown(KeyCode.W) && isTouchingGround)
         {
             player.velocity = new Vector2(player.velocity.x, jumpSpeed);
